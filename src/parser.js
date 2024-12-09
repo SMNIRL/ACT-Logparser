@@ -23,6 +23,7 @@ function parseLogLine(logLine, lineNumber = 0, throwOnError = false) {
         const struct = logTypeStructs[logTypeId];
         if(!struct) {
             return {
+                line: lineNumber,
                 log: {},
                 error: `Invalid or unsupported log line at row ${lineNumber}. Could not find struct for log type ID "${logTypeId}"`,
                 errorAt: lineNumber
@@ -35,6 +36,7 @@ function parseLogLine(logLine, lineNumber = 0, throwOnError = false) {
         error = `Invalid or unsupported log line at row ${lineNumber}. Could not find struct for log type ID "${logTypeId}"`
 
         return {
+            line: lineNumber,
             log: {},
             error: error,
             errorAt: lineNumber
@@ -58,6 +60,7 @@ function parseLogLine(logLine, lineNumber = 0, throwOnError = false) {
         }
 
         return {
+            line: lineNumber,
             log: {},
             error: error,
             errorAt: lineNumber
@@ -65,6 +68,7 @@ function parseLogLine(logLine, lineNumber = 0, throwOnError = false) {
     }
 
     return {
+        line: lineNumber,
         log: parsedLogLine
     }
 }
