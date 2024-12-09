@@ -13,7 +13,7 @@ async function processLogStream(fileStream, callback, logLineParser = parseLogLi
         input: fileStream,
         crlfDelay: Infinity
     });
-    let lineIndex = 0;
+    let lineIndex = 1;
 
     for await (const line of reader) {
         callback(logLineParser(line, lineIndex))
