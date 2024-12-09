@@ -1,0 +1,12 @@
+{
+  "name": "@smnirl/act-logparser",
+  "version": "1.0.1",
+  "description": "High performance JS parsing library for Advanced Combat Tracker logs.",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --test ./tests/*.test.js"
+  },
+  "author": "Kastor <kastorthecatboy@gmail.com>",
+  "license": "MIT"
+}
