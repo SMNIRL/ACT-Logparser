@@ -1,5 +1,4 @@
-# ACT Logparser
-
+# ACT Logparser [![NodeJS Tests](https://github.com/SMNIRL/ACT-Logparser/actions/workflows/node.js.yml/badge.svg)](https://github.com/SMNIRL/ACT-Logparser/actions/workflows/node.js.yml) ![Latest Version](https://img.shields.io/github/package-json/v/SMNIRL/ACT-Logparser)
 ACT Logparser is a Javascript library for parsing MMO network logs from [Advanced Combat Tracker](https://advancedcombattracker.com/).
 
 It currently supports Final Fantasy 14 (FFXIV), with additional support for log types recorded by [OverlayPlugin](https://github.com/OverlayPlugin).
