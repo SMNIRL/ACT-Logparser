@@ -8,7 +8,7 @@ You can clone the repo, or install via NPM/Yarn/etc with `npm i @smnirl/act-logp
 
 # Usage
 
-# One-off parsing
+## One-off parsing
 
 The `parseLogLine()` method will parse a single ACT Network Log line given as a string and return the result, along
 with the line it appeared on within the stream synchronously.
@@ -34,7 +34,7 @@ will return as
 (The type definitions and log structure data used by this library are also exported as lookup table objects as 
 `logTypes`, `logTypeIds` and `logTypeStructs` for your reference.)
 
-# Parsing large files or real-time
+## Parsing large files or real-time
 
 The `processLogStream()` method accepts a ReadStream object and callback function, and will continue to
 parse the given stream until it ends. This functionality calls the synchronous `parseLogLine()` method and returns its
