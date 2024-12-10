@@ -6,13 +6,12 @@ const delimiter = '|';
  * Turns a log line into an object structured around its type
  *
  * If an error occurs, returns the error and line number, with an EMPTY log object, and continues parsing on the
- * next line unless throwOnError is set to true.
+ * next line.
  * @param {string} logLine
  * @param {int} [lineNumber]
- * @param throwOnError
  * @returns {{log: {}}|{errorAt, log: {}, error: string}}
  */
-function parseLogLine(logLine, lineNumber = 0, throwOnError = false) {
+function parseLogLine(logLine, lineNumber = 0) {
     let error;
     let parsedLogLine;
 
@@ -54,10 +53,6 @@ function parseLogLine(logLine, lineNumber = 0, throwOnError = false) {
     } catch (e) {
         console.error(e.message, e);
         error = `Log line did not match extracted type (${logTypeId}:${logTypeIds[logTypeId]}) at line ${lineNumber}`
-
-        if(throwOnError) {
-            throw new Error(error);
-        }
 
         return {
             line: lineNumber,
