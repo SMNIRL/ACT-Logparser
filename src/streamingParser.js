@@ -26,8 +26,8 @@ async function processLogStream(fileStream, callback, logLineParser = parseLogLi
  * @callback processLogStream~parsedLogLineHandlerCallback
  * @param {Object} parsedLogLine - An encapsulated log line object with optional error info
  * @param {Object} parsedLogLine.log - The parsed log line object, will be an empty object if an error occurred
+ * @param {int} parsedLogLine.line - The line the log was read from in the stream
  * @param {String} [parsedLogLine.error] - An error message about the log line, will not exist if no error occurred
- * @param {String} [parsedLogLine.errorAt] - The line number the error occurred at, will not exist if no error occurred
  */
 
 /**

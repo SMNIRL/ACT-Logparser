@@ -9,7 +9,7 @@ const delimiter = '|';
  * next line.
  * @param {string} logLine
  * @param {int} [lineNumber]
- * @returns {{log: {}}|{errorAt, log: {}, error: string}}
+ * @returns {{line: int, log: {}}|{line: int, log: {}, error: string}}
  */
 function parseLogLine(logLine, lineNumber = 0) {
     let error;
@@ -24,8 +24,7 @@ function parseLogLine(logLine, lineNumber = 0) {
             return {
                 line: lineNumber,
                 log: {},
-                error: `Invalid or unsupported log line at row ${lineNumber}. Could not find struct for log type ID "${logTypeId}"`,
-                errorAt: lineNumber
+                error: `Invalid or unsupported log line at row ${lineNumber}. Could not find struct for log type ID "${logTypeId}"`
             }
         }
         Object.assign(scaffold, struct);
@@ -37,8 +36,7 @@ function parseLogLine(logLine, lineNumber = 0) {
         return {
             line: lineNumber,
             log: {},
-            error: error,
-            errorAt: lineNumber
+            error: error
         };
     }
 
@@ -57,8 +55,7 @@ function parseLogLine(logLine, lineNumber = 0) {
         return {
             line: lineNumber,
             log: {},
-            error: error,
-            errorAt: lineNumber
+            error: error
         };
     }
 
