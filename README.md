@@ -2,11 +2,9 @@
 ACT Logparser is a Javascript library for parsing MMO network logs from [Advanced Combat Tracker](https://advancedcombattracker.com/).
 
 It currently supports Final Fantasy 14 (FFXIV), with additional support for log types recorded by [OverlayPlugin](https://github.com/OverlayPlugin).
+# Installation
 
-# Performance
-As ACT network logs are entirely pipe-delimited, I used tokenization for this library instead of regex, as I saw other projects
-doing. This approach provides a 40-70% speed up in processing time with lower(!) memory usage compared to parsing similarly
-using regular expressions.
+You can clone the repo, or install via NPM/Yarn/etc with `npm i @smnirl/act-logparser`
 
 # Usage
 
@@ -45,6 +43,11 @@ result to your callback.
 # Error Handling
 The `parseLogLine()` function does not throw on errors or halt, instead, an `error` string is returned in the 
 encapsulating object, along with an empty `log` object and the `line` of the stream at which the error occurred.
+
+# Performance
+As ACT network logs are entirely pipe-delimited, I used tokenization for this library instead of regex, as I saw other projects
+doing. This approach provides a 40-70% speed up in processing time with lower(!) memory usage compared to parsing similarly
+using regular expressions.
 
 # Contributing
 If you wish to make an improvement, fix bugs, etc. please feel free to open a Pull Request.
