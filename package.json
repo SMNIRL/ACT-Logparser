@@ -1,6 +1,6 @@
 {
   "name": "@smnirl/act-logparser",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "High performance JS parsing library for Advanced Combat Tracker logs.",
   "type": "module",
   "main": "index.js",
