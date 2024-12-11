@@ -28,7 +28,7 @@ function parseLogLine(logLine, lineNumber = 0) {
             }
         }
         Object.assign(scaffold, struct);
-        parsedLogLine = Object.seal(struct);
+        parsedLogLine = Object.seal(scaffold);
     } catch (e) {
         console.error(e.message, e);
         error = `Invalid or unsupported log line at row ${lineNumber}. Could not find struct for log type ID "${logTypeId}"`
