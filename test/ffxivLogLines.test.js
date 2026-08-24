@@ -1,11 +1,12 @@
 import { test } from 'node:test'
 import assert from 'node:assert'
 import { parseLogLine } from "../src/parser.js";
+import { decodeDamage } from "../src/fieldDecoders.js";
 
 test('can parse game log line', (t) => {
     const logLine = '00|2024-12-03T20:38:16.0000000-05:00|0039||You have entered a sanctuary.|6a4df12a18d6dd9f'
     const expectedObject =  {
-        code: '0039',
+        code: 0x0039,
         line: 'You have entered a sanctuary.',
         name: '',
         timestamp: '2024-12-03T20:38:16.0000000-05:00',
@@ -51,14 +52,14 @@ test('can parse changePrimaryPlayer log line', (t) => {
 test('can parse addCombatant log line', (t) => {
     const logLine = '03|2024-12-03T20:38:17.3210000-05:00|55555A5A|Producer Yoshida|18|5E|0000|69|Closet|0|0|69420|69421|10000|10000|||41.92|33.41|1.20|-2.06|abcd1234'
     const expectedObject =  {
-        currentHp: '69420',
-        currentMp: '10000',
-        heading: '33.41',
-        hp: '69421',
+        currentHp: 69420,
+        currentMp: 10000,
+        heading: 33.41,
+        hp: 69421,
         id: '55555A5A',
-        job: '18',
-        level: '5E',
-        mp: '10000',
+        job: 0x18,
+        level: 0x5E,
+        mp: 10000,
         name: 'Producer Yoshida',
         npcBaseId: '0',
         npcNameId: '0',
@@ -67,9 +68,9 @@ test('can parse addCombatant log line', (t) => {
         type: '03',
         world: 'Closet',
         worldId: '69',
-        x: '',
-        y: '',
-        z: '41.92'
+        x: 0,
+        y: 0,
+        z: 41.92
     }
 
     const parsedLogLine = parseLogLine(logLine);
@@ -81,14 +82,14 @@ test('can parse addCombatant log line', (t) => {
 test('can parse removeCombatant log line', (t) => {
     const logLine = '04|2024-12-03T20:38:26.6060000-05:00|12345ACE|Producer Yoshida|12|F|0000|123|Mana|0|0|255|255|10000|10000|||12.34|12.34|1.23|-1.23|abcd1234'
     const expectedObject =  {
-        currentHp: '255',
-        heading: '-1.23',
-        hp: '255',
+        currentHp: 255,
+        heading: -1.23,
+        hp: 255,
         id: '12345ACE',
-        job: '12',
-        level: 'F',
-        currentMp: '10000',
-        mp: '10000',
+        job: 0x12,
+        level: 0x0F,
+        currentMp: 10000,
+        mp: 10000,
         name: 'Producer Yoshida',
         npcBaseId: '0',
         npcNameId: '0',
@@ -96,9 +97,9 @@ test('can parse removeCombatant log line', (t) => {
         timestamp: '2024-12-03T20:38:26.6060000-05:00',
         type: '04',
         world: 'Mana',
-        x: '12.34',
-        y: '12.34',
-        z: '1.23'
+        x: 12.34,
+        y: 12.34,
+        z: 1.23
     }
 
     const parsedLogLine = parseLogLine(logLine);
@@ -110,7 +111,7 @@ test('can parse removeCombatant log line', (t) => {
 test('can parse partyList log line', (t) => {
     const logLine = '11|2024-12-03T21:05:29.4640000-05:00|9|12345678|1234AB5C|123ABCD|1234ABCD|123ABCD4|B469420A|4321ABCD|ABCD123|1234abcdefg'
     const expectedObject =  {
-        partyCount: '9',
+        partyCount: 9,
         timestamp: '2024-12-03T21:05:29.4640000-05:00',
         type: '11'
     }
@@ -124,24 +125,24 @@ test('can parse partyList log line', (t) => {
 test('can parse playerStats log line', (t) => {
     const logLine = '12|2024-12-03T21:05:31.8240000-05:00|22|222|111|666|22|333|111|222|444|555|11|555|111|222|222|333|3005123ABCDE47|1234abcdefg'
     const expectedObject =  {
-        attackMagicPotency: '11',
-        attackPower: '222',
-        criticalHit: '555',
-        determination: '111',
-        dexterity: '111',
-        directHit: '444',
-        healMagicPotency: '555',
-        intelligence: '22',
-        job: '22',
-        mind: '333',
-        piety: '111',
-        skillSpeed: '222',
-        spellSpeed: '222',
-        strength: '222',
-        tenacity: '3005123ABCDE47',
+        attackMagicPotency: 11,
+        attackPower: 222,
+        criticalHit: 555,
+        determination: 111,
+        dexterity: 111,
+        directHit: 444,
+        healMagicPotency: 555,
+        intelligence: 22,
+        job: 0x22,
+        mind: 333,
+        piety: 111,
+        skillSpeed: 222,
+        spellSpeed: 222,
+        strength: 222,
+        tenacity: 3005123,
         timestamp: '2024-12-03T21:05:31.8240000-05:00',
         type: '12',
-        vitality: '666'
+        vitality: 666
     }
 
     const parsedLogLine = parseLogLine(logLine);
@@ -154,8 +155,8 @@ test('can parse networkStartsCasting log line', (t) => {
     const logLine = '20|2024-12-03T21:14:26.7950000-05:00|66642069|Producer Yoshida|330|unknown_111|66642069|Producer Yoshida|1.000|222.22|333.11|0.00|1.11|1234abcdefg'
     const expectedObject =  {
         ability: 'unknown_111',
-        castTime: '1.000',
-        heading: '1.11',
+        castTime: 1,
+        heading: 1.11,
         id: '330',
         source: 'Producer Yoshida',
         sourceId: '66642069',
@@ -163,9 +164,9 @@ test('can parse networkStartsCasting log line', (t) => {
         targetId: '66642069',
         timestamp: '2024-12-03T21:14:26.7950000-05:00',
         type: '20',
-        x: '222.22',
-        y: '333.11',
-        z: '0.00'
+        x: 222.22,
+        y: 333.11,
+        z: 0
     }
 
     const parsedLogLine = parseLogLine(logLine);
@@ -180,39 +181,39 @@ test('can parse networkAbility log line', (t) => {
         ability: 'item_1234',
         actionAnimationId: '221',
         actionId: 'ABC0',
-        animationLockTime: '1.111',
-        currentHp: '122222',
-        currentMp: '10000',
-        damage: '2024657',
-        effectDisplayType: '02',
-        flags: 'F0E',
-        heading: '0.00',
+        animationLockTime: 1.111,
+        currentHp: 122222,
+        currentMp: 10000,
+        damage: 5702146,
+        effectDisplayType: 0x02,
+        flags: 'Unknown (0x0E)',
+        heading: 0,
         id: '2024657',
-        maxHp: '122222',
-        maxMp: '10000',
+        maxHp: 122222,
+        maxMp: 10000,
         ownerId: '00',
         ownerName: '',
-        rotationHex: 'ABC0',
+        rotationHex: 0xABC0,
         sequence: '00000111',
         source: 'Producer Yoshida',
         sourceId: '66642069',
         target: 'Producer Yoshida',
-        targetCount: '1',
-        targetCurrentHp: '122222',
-        targetCurrentMp: '10000',
-        targetHeading: '3.00',
+        targetCount: 1,
+        targetCurrentHp: 122222,
+        targetCurrentMp: 10000,
+        targetHeading: 3,
         targetId: '66642069',
-        targetIndex: '0',
-        targetMaxHp: '122222',
-        targetMaxMp: '10000',
-        targetX: '101.11',
-        targetY: '101.11',
-        targetZ: '0.00',
+        targetIndex: 0,
+        targetMaxHp: 122222,
+        targetMaxMp: 10000,
+        targetX: 101.11,
+        targetY: 101.11,
+        targetZ: 0,
         timestamp: '2024-12-03T21:14:28.2640000-05:00',
         type: '21',
-        x: '101.11',
-        y: '101.11',
-        z: '0.00'
+        x: 101.11,
+        y: 101.11,
+        z: 0
     }
     const parsedLogLine = parseLogLine(logLine);
 
@@ -226,39 +227,39 @@ test('can parse networkAOEAbility log line', (t) => {
         ability: 'Peloton',
         actionAnimationId: 'ABC0',
         actionId: 'ABC0',
-        animationLockTime: '0.100',
-        currentHp: '122222',
-        currentMp: '10000',
-        damage: '2024657',
-        effectDisplayType: '01',
-        flags: '0000000A',
-        heading: '0.00',
+        animationLockTime: 0.1,
+        currentHp: 122222,
+        currentMp: 10000,
+        damage: 5702146,
+        effectDisplayType: 0x01,
+        flags: 'Unknown (0x0A)',
+        heading: 0,
         id: 'ABC0',
-        maxHp: '122222',
-        maxMp: '10000',
+        maxHp: 122222,
+        maxMp: 10000,
         ownerId: '00',
         ownerName: '',
-        rotationHex: 'ABC0',
+        rotationHex: 0xABC0,
         sequence: '00000111',
         source: 'Producer Yoshida',
         sourceId: '66642069',
         target: 'Producer Yoshida',
-        targetCount: '1',
-        targetCurrentHp: '122222',
-        targetCurrentMp: '10000',
-        targetHeading: '3.00',
+        targetCount: 1,
+        targetCurrentHp: 122222,
+        targetCurrentMp: 10000,
+        targetHeading: 3,
         targetId: '12345678',
-        targetIndex: '0',
-        targetMaxHp: '122222',
-        targetMaxMp: '10000',
-        targetX: '101.11',
-        targetY: '101.11',
-        targetZ: '0.00',
+        targetIndex: 0,
+        targetMaxHp: 122222,
+        targetMaxMp: 10000,
+        targetX: 101.11,
+        targetY: 101.11,
+        targetZ: 0,
         timestamp: '2024-12-03T21:14:53.9580000-05:00',
         type: '22',
-        x: '101.11',
-        y: '101.11',
-        z: '0.00'
+        x: 101.11,
+        y: 101.11,
+        z: 0
     }
 
     const parsedLogLine = parseLogLine(logLine);
@@ -288,32 +289,32 @@ test('can parse networkCancelAbility log line', (t) => {
 test('can parse networkDoT log line', (t) => {
     const logLine = '24|2024-12-03T21:16:19.5320000-05:00|66642069|Producer Yoshida|HoT|0|1234|123456|123456|1234|10000|||10.00|100.00|0.00|1.00|1234ABCD|Producer Yoshida|0|123456|123456|1234|10000|||100.00|100.00|0.00|1.00|1234abcdefg'
     const expectedObject =  {
-        currentHp: '123456',
-        currentMp: '1234',
-        damage: '1234',
+        currentHp: 123456,
+        currentMp: 1234,
+        damage: 4660,
         damageType: '0',
         effectId: '0',
-        heading: '1.00',
+        heading: 1,
         id: '66642069',
-        maxHp: '123456',
-        maxMp: '10000',
+        maxHp: 123456,
+        maxMp: 10000,
         name: 'Producer Yoshida',
         source: 'Producer Yoshida',
-        sourceCurrentHp: '123456',
-        sourceCurrentMp: '1234',
-        sourceHeading: '1.00',
+        sourceCurrentHp: 123456,
+        sourceCurrentMp: 1234,
+        sourceHeading: 1,
         sourceId: '1234ABCD',
-        sourceMaxHp: '123456',
-        sourceMaxMp: '10000',
-        sourceX: '100.00',
-        sourceY: '100.00',
-        sourceZ: '0.00',
+        sourceMaxHp: 123456,
+        sourceMaxMp: 10000,
+        sourceX: 100,
+        sourceY: 100,
+        sourceZ: 0,
         timestamp: '2024-12-03T21:16:19.5320000-05:00',
         type: '24',
         which: 'HoT',
-        x: '10.00',
-        y: '100.00',
-        z: '0.00'
+        x: 10,
+        y: 100,
+        z: 0
     }
 
     const parsedLogLine = parseLogLine(logLine);
@@ -342,16 +343,16 @@ test('can parse networkDeath log line', (t) => {
 test('can parse networkBuff log line', (t) => {
     const logLine = '26|2024-12-03T21:16:28.1010000-05:00|A2D|Kardion|60.00|11234ABCD|Producer Yoshida|11234ABCD|Producer Yoshida|00|123456|123456|1234abcdefg'
     const expectedObject =  {
-        count: '00',
-        duration: '60.00',
+        count: 0,
+        duration: 60,
         effect: 'Kardion',
         effectId: 'A2D',
         source: 'Producer Yoshida',
         sourceId: '11234ABCD',
-        sourceMaxHp: '123456',
+        sourceMaxHp: 123456,
         target: 'Producer Yoshida',
         targetId: '11234ABCD',
-        targetMaxHp: '123456',
+        targetMaxHp: 123456,
         timestamp: '2024-12-03T21:16:28.1010000-05:00',
         type: '26'
     }
@@ -387,9 +388,9 @@ test('can parse networkRaidMarker log line', (t) => {
         timestamp: '2024-12-03T22:28:52.7020000-05:00',
         type: '28',
         waymark: '0',
-        x: '0.00',
-        y: '0.00',
-        z: '0.00'
+        x: 0,
+        y: 0,
+        z: 0
     }
 
     const parsedLogLine = parseLogLine(logLine);
@@ -420,7 +421,7 @@ test('can parse networkTargetMarker log line', (t) => {
 test('can parse networkBuffRemove log line', (t) => {
     const logLine = '30|2024-12-03T22:43:16.7610000-05:00|AB1|Hammer Time|0.00|11234ABCD|Producer Yoshida|11234ABCD|Producer Yoshida|01|123456|123456|1234abcdefg'
     const expectedObject =  {
-        count: '01',
+        count: 1,
         effect: 'Hammer Time',
         effectId: 'AB1',
         source: 'Producer Yoshida',
@@ -485,7 +486,7 @@ test('can parse networkNameToggle log line', (t) => {
         targetId: '11234ABCD',
         targetName: 'Usurper of Frost',
         timestamp: '2024-12-03T23:11:20.8430000-05:00',
-        toggle: '01',
+        toggle: 1,
         type: '34'
     }
 
@@ -516,10 +517,10 @@ test('can parse networkTether log line', (t) => {
 test('can parse limitBreak log line', (t) => {
     const logLine = '36|2024-12-03T23:14:17.3840000-05:00|1234|1|1234abcdefg'
     const expectedObject =  {
-        bars: '1',
+        bars: 1,
         timestamp: '2024-12-03T23:14:17.3840000-05:00',
         type: '36',
-        valueHex: '1234'
+        valueHex: 0x1234
     }
 
     const parsedLogLine = parseLogLine(logLine);
@@ -531,20 +532,20 @@ test('can parse limitBreak log line', (t) => {
 test('can parse networkActionSync log line', (t) => {
     const logLine = '37|2024-12-03T23:14:18.1870000-05:00|66642069|Producer Yoshida|1234ABCD|123456|123456|10000|10000|11||100.00|100.00|0.00|1.00|ABC0|0|0|01|123456A|03|11234ABCD|11234ABCD|1234abcdefg'
     const expectedObject =  {
-        currentHp: '123456',
-        currentMp: '10000',
-        currentShield: '11',
-        heading: '1.00',
+        currentHp: 123456,
+        currentMp: 10000,
+        currentShield: 11,
+        heading: 1,
         id: '66642069',
-        maxHp: '123456',
-        maxMp: '10000',
+        maxHp: 123456,
+        maxMp: 10000,
         name: 'Producer Yoshida',
         sequenceId: '1234ABCD',
         timestamp: '2024-12-03T23:14:18.1870000-05:00',
         type: '37',
-        x: '100.00',
-        y: '100.00',
-        z: '0.00'
+        x: 100,
+        y: 100,
+        z: 0
     }
 
     const parsedLogLine = parseLogLine(logLine);
@@ -556,26 +557,26 @@ test('can parse networkActionSync log line', (t) => {
 test('can parse networkStatusEffects log line', (t) => {
     const logLine = '38|2024-12-03T23:14:18.1870000-05:00|66642069|Producer Yoshida|1334ABCD|133223|142479|10000|10000|01||100.00|100.00|0.00|1.00|0|0|0|ABC0|DABC1234|1234ABCD|1234ABCD|45636800|1234ABCD|ABC0|0981DDEF|1234ABCD|ADE333|AAAA1111|11111AAA|0|0|0|ABC0|DABC1234|1478DDDD|ABCD|11234DBCD|12234ABCD|0|0|0|0|0|0|ABC0|11234ADCD|12134ABCD|ABC0|12345678|66642069|0|0|0|0001|11234ABCD|66642069|1234abcdefg\n'
     const expectedObject =  {
-        currentShield: '01',
-        data0: '0',
-        data1: '0',
-        data2: '0',
-        data3: 'ABC0',
-        data4: 'DABC1234',
-        data5: '1234ABCD',
-        heading: '1.00',
-        hp: '133223',
-        jobLevelData: '1334ABCD',
-        maxHp: '142479',
-        maxMp: '10000',
-        mp: '10000',
+        currentShield: 1,
+        data0: 0,
+        data1: 0,
+        data2: 0,
+        data3: 0xABC0,
+        data4: 0xDABC1234,
+        data5: 0x1234ABCD,
+        heading: 1,
+        hp: 133223,
+        jobLevelData: 0x1334ABCD,
+        maxHp: 142479,
+        maxMp: 10000,
+        mp: 10000,
         target: 'Producer Yoshida',
         targetId: '66642069',
         timestamp: '2024-12-03T23:14:18.1870000-05:00',
         type: '38',
-        x: '100.00',
-        y: '100.00',
-        z: '0.00'
+        x: 100,
+        y: 100,
+        z: 0
     }
 
     const parsedLogLine = parseLogLine(logLine);
@@ -587,18 +588,18 @@ test('can parse networkStatusEffects log line', (t) => {
 test('can parse networkUpdateHP log line', (t) => {
     const logLine = '39|2024-12-03T23:14:20.9580000-05:00|66642069|Producer Yoshida|654321|123645|9876|10000|||100.00|100.00|0.00|-0.01|1234abcdefg'
     const expectedObject =  {
-        currentHp: '654321',
-        currentMp: '9876',
-        heading: '-0.01',
+        currentHp: 654321,
+        currentMp: 9876,
+        heading: -0.01,
         id: '66642069',
-        maxHp: '123645',
-        maxMp: '10000',
+        maxHp: 123645,
+        maxMp: 10000,
         name: 'Producer Yoshida',
         timestamp: '2024-12-03T23:14:20.9580000-05:00',
         type: '39',
-        x: '100.00',
-        y: '100.00',
-        z: '0.00'
+        x: 100,
+        y: 100,
+        z: 0
     }
 
     const parsedLogLine = parseLogLine(logLine);
@@ -697,3 +698,30 @@ test('can parse error log line', {skip: 'Not Implemented'},(t) => {
     assert.notEqual(parsedLogLine.hasOwnProperty('error'), true, 'Log line parsed with error: ' + parsedLogLine.error);
     assert.deepEqual(parsedLogLine.log, expectedObject);
 })
+
+test('can decode damage values properly', (t) => {
+    assert.strictEqual(decodeDamage('04584001', '21'), 66648);
+});
+
+test('can decode damage with larger upper byte', (t) => {
+    assert.strictEqual(decodeDamage('426B400F', '21'), 1000043);
+});
+
+test('can decode damage for networkAoEAbility with larger upper byte', (t) => {
+    assert.strictEqual(decodeDamage('12340000', '22'), 4660);
+});
+
+test('decodes zero damage values properly', (t) => {
+    assert.strictEqual(decodeDamage('0', '21'), 0);
+    assert.strictEqual(decodeDamage('00000000', '21'), 0);
+});
+
+test('decoder ignores empty string in damage field', (t) => {
+    assert.strictEqual(decodeDamage('', '21'), 0);
+});
+
+test('can decode networkDoT', (t) => {
+    assert.strictEqual(decodeDamage('1234', '24'), 4660);
+    assert.strictEqual(decodeDamage('FF', '24'), 255);
+    assert.strictEqual(decodeDamage('04584001', '24'), parseInt('04584001', 16));
+});
