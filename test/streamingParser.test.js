@@ -6,7 +6,7 @@ import { parseLogLine } from "../src/parser.js";
 import {processLogStream} from "../src/streamingParser.js";
 
 const APP_ROOT = process.cwd()
-const TEST_DATA_TESTLOG_MIXED = path.join(APP_ROOT, 'tests/testData/testlog_mixed.log')
+const TEST_DATA_TESTLOG_MIXED = path.join(APP_ROOT, 'test/testData/testlog_mixed.log')
 
 test('can parse filestream as log data', async (t) => {
     const logFileStream = fs.createReadStream(TEST_DATA_TESTLOG_MIXED);
