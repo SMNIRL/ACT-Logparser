@@ -1,4 +1,5 @@
 import {logTypeIds, logTypeStructs} from "./parsingConstants.js";
+import {fieldDecoders} from "./fieldDecoders.js";
 
 const delimiter = '|';
 
@@ -43,10 +44,13 @@ function parseLogLine(logLine, lineNumber = 0) {
     const tokens = logLine.split(delimiter);
     tokens.pop(); // We don't care about the checksum(?) value/id at the end of the line
     const structKeys = Object.keys(parsedLogLine);
+    const typeDecoders = fieldDecoders[logTypeId];
 
     try {
         structKeys.forEach((key) => {
-            parsedLogLine[key] = tokens[logTypeStructs[logTypeId][key]]
+            const token = tokens[logTypeStructs[logTypeId][key]];
+            const decode = typeDecoders?.[key];
+            parsedLogLine[key] = decode ? decode(token) : token;
         })
     } catch (e) {
         console.error(e.message, e);
@@ -71,5 +75,5 @@ function getLogLineType(logLine) {
 }
 
 export {
-    parseLogLine
+    parseLogLine,
 }
